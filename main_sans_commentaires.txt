@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include "tp4.h"
+
+using namespace std;
+
+int main()
+{
+    vector<int> nombres;
+    vector<int>::iterator it;
+    Inverser inv;
+    DivisiblePar5 div;
+
+    cout << "Entrez des nombres (ctrl + d pour mettre fin a la saisi): " << endl;
+    copy(istream_iterator<int>(cin), istream_iterator<int>(), back_inserter(nombres));
+
+    vector<int> divisible_par_5(nombres.size());
+    it = copy_if(nombres.begin(), nombres.end(), divisible_par_5.begin(), div);
+    divisible_par_5.resize(distance(divisible_par_5.begin(), it));
+
+    vector<int> inverses(nombres.size());
+    transform(nombres.begin(), nombres.end(), inverses.begin(), inv);
+
+    sort(nombres.begin(), nombres.end());
+
+    cout << "\nAffichage de la liste initiale triee :\n\n";
+    copy(nombres.begin(), nombres.end(), ostream_iterator<int>(cout, "\n"));
+    cout << endl;
+    cout << "Affichage de la liste initiale inversee :\n\n";
+    copy(inverses.begin(), inverses.end(), ostream_iterator<int>(cout, "\n"));
+    cout << endl;
+    cout << "Affichage des nombres divisibles par 5 :\n\n";
+    copy(divisible_par_5.begin(), divisible_par_5.end(), ostream_iterator<int>(cout, "\n"));
+    cout << endl;
+}
